@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>치루켓</title>
   <style>
-    html, body { margin: 0; height: 100%; background: #131A25; overflow: hidden; touch-action: none; }
+    html, body { margin: 0; height: 100%; background: #131A25; overflow: hidden; touch-action: none; overscroll-behavior: none; }
     /* Fixed 9:16 frame, centred with letterbox (design.md §2). */
     /* Largest 9:16 box that fits; dvh avoids mobile browser bars cropping the frame. */
     #game-frame { position: absolute; inset: 0; margin: auto; width: min(100vw, 100dvh * 9 / 16); height: min(100dvh, 100vw * 16 / 9); }
     /* Holding the canvas/pads is gameplay, not Safari text/image selection. */
-    #game-frame, #game-frame * { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+    #game-frame, #game-frame * { touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
     #game { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
     .pad { position: absolute; bottom: 0; width: 50%; height: 40%; }
     #left { left: 0; } #right { right: 0; }
@@ -24,5 +24,15 @@
     <div class="pad" id="left" aria-label="왼쪽 분사 (A)"></div>
     <div class="pad" id="right" aria-label="오른쪽 분사 (D)"></div>
   </div>
+  <script data-game-gestures>
+    // Install before module/model loading. Gameplay uses Pointer Events, not emulated clicks.
+    // This canvas-only surface reserves touches for play; future form controls need an exception.
+    {
+      const surface = document.querySelector('#game-frame');
+      for (const type of ['touchstart', 'touchmove', 'touchend', 'gesturestart', 'gesturechange', 'gestureend', 'dblclick']) {
+        surface.addEventListener(type, event => { if (event.cancelable) event.preventDefault(); }, { passive: false, capture: true });
+      }
+    }
+  </script>
 </body>
 </html>
