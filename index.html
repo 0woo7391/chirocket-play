@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>치루켓 렌더 POC</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #131A25; overflow: hidden; touch-action: none; }
+    /* Fixed 9:16 frame, centred with letterbox (design.md §2). */
+    #game-frame { position: absolute; inset: 0; margin: auto; aspect-ratio: 9 / 16; max-width: 100vw; max-height: 100vh; height: 100vh; }
+    #game { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+    .pad { position: absolute; bottom: 0; width: 50%; height: 40%; }
+    #left { left: 0; } #right { right: 0; }
+    #game-frame.menu .pad { pointer-events: none; } /* menus take taps on the canvas */
+  </style>
+  <script type="module" crossorigin src="./assets/index-CjPWx2DK.js"></script>
+</head>
+<body>
+  <div id="game-frame">
+    <canvas id="game"></canvas>
+    <div class="pad" id="left" aria-label="왼쪽 분사 (A)"></div>
+    <div class="pad" id="right" aria-label="오른쪽 분사 (D)"></div>
+  </div>
+</body>
+</html>
