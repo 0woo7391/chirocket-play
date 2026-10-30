@@ -15,14 +15,23 @@
     .pad { position: absolute; bottom: 0; width: 50%; height: 40%; }
     #left { left: 0; } #right { right: 0; }
     #game-frame.menu .pad { pointer-events: none; } /* menus take taps on the canvas */
+    #loading { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; background: #131A25; color: #FAF0DB; text-align: center; font-family: sans-serif; padding: 24px; }
+    #loading strong { font-size: 28px; letter-spacing: 0.14em; }
+    #loading p { margin: 0; font-size: 15px; line-height: 1.6; }
+    .loading-mark { width: 6px; height: 6px; margin-right: 24px; background: #66D2BB; box-shadow: 12px 0 #66D2BB, 24px 0 #66D2BB; }
   </style>
-  <script type="module" crossorigin src="./assets/index-CJ9NEImu.js"></script>
+  <script type="module" crossorigin src="./assets/index-DAK5MmFW.js"></script>
 </head>
 <body>
   <div id="game-frame">
     <canvas id="game" draggable="false"></canvas>
     <div class="pad" id="left" aria-label="왼쪽 분사 (A)"></div>
     <div class="pad" id="right" aria-label="오른쪽 분사 (D)"></div>
+    <div id="loading" role="status" aria-live="polite">
+      <strong>치루켓</strong>
+      <p>로딩 중…</p>
+      <span class="loading-mark" aria-hidden="true"></span>
+    </div>
   </div>
   <script data-game-gestures>
     // Install before module/model loading. Gameplay uses Pointer Events, not emulated clicks.
@@ -32,6 +41,20 @@
       for (const type of ['touchstart', 'touchmove', 'touchend', 'gesturestart', 'gesturechange', 'gestureend', 'dblclick']) {
         surface.addEventListener(type, event => { if (event.cancelable) event.preventDefault(); }, { passive: false, capture: true });
       }
+    }
+  </script>
+  <script data-loading-screen>
+    // Works even if the game module itself cannot be downloaded or initialized.
+    {
+      const screen = document.querySelector('#loading');
+      const fail = () => {
+        if (!screen.isConnected) return;
+        screen.dataset.failed = 'true';
+        screen.setAttribute('role', 'alert');
+        screen.querySelector('p').textContent = '불러오지 못했어요. 새로고침해 주세요.';
+      };
+      window.addEventListener('error', fail, true);
+      window.addEventListener('unhandledrejection', fail);
     }
   </script>
 </body>
