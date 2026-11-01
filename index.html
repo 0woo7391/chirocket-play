@@ -18,7 +18,7 @@
     #left { left: 0; } #right { right: 0; }
     #game-frame.menu .pad { pointer-events: none; } /* menus take taps on the canvas */
     #loading { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; background: #131A25; color: #FAF0DB; text-align: center; font-family: sans-serif; padding: 24px; }
-    #loading strong { font-size: 28px; letter-spacing: 0.14em; }
+    #loading .loading-logo { width: min(80%, 320px); height: auto; }
     #loading p { margin: 0; font-size: 15px; line-height: 1.6; }
     .loading-mark { width: 6px; height: 6px; margin-right: 24px; background: #66D2BB; box-shadow: 12px 0 #66D2BB, 24px 0 #66D2BB; animation: loading-blink 0.8s steps(2) infinite; }
     @keyframes loading-blink { 50% { opacity: 0.25; } }
@@ -26,7 +26,7 @@
     .loading-bar i { display: block; height: 100%; width: 0; background: #66D2BB; transition: width 0.2s; }
     #loading[data-failed] .loading-bar, #loading[data-failed] .loading-mark { display: none; }
   </style>
-  <script type="module" crossorigin src="./assets/index-BfbTZAQd.js"></script>
+  <script type="module" crossorigin src="./assets/index-UtTVbNAl.js"></script>
 </head>
 <body>
   <div id="game-frame">
@@ -34,7 +34,7 @@
     <div class="pad" id="left" aria-label="왼쪽 분사 (A)"></div>
     <div class="pad" id="right" aria-label="오른쪽 분사 (D)"></div>
     <div id="loading" role="status" aria-live="polite">
-      <strong>치루켓</strong>
+      <img class="loading-logo" src="./logo.webp" alt="치루켓">
       <p>로딩 중… 0%</p>
       <div class="loading-bar" aria-hidden="true"><i></i></div>
       <span class="loading-mark" aria-hidden="true"></span>
