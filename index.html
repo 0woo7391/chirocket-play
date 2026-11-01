@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>치루켓</title>
   <style>
+    /* Galmuri11 by Lee Minseo (quiple), SIL OFL 1.1 — public/fonts/Galmuri-OFL.md */
+    @font-face { font-family: 'Galmuri11'; src: url('./fonts/Galmuri11.woff2') format('woff2'); font-display: swap; }
     html, body { margin: 0; height: 100%; background: #131A25; overflow: hidden; touch-action: none; overscroll-behavior: none; }
     /* Fixed 9:16 frame, centred with letterbox (design.md §2). */
     /* Largest 9:16 box that fits; dvh avoids mobile browser bars cropping the frame. */
@@ -18,9 +20,13 @@
     #loading { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; background: #131A25; color: #FAF0DB; text-align: center; font-family: sans-serif; padding: 24px; }
     #loading strong { font-size: 28px; letter-spacing: 0.14em; }
     #loading p { margin: 0; font-size: 15px; line-height: 1.6; }
-    .loading-mark { width: 6px; height: 6px; margin-right: 24px; background: #66D2BB; box-shadow: 12px 0 #66D2BB, 24px 0 #66D2BB; }
+    .loading-mark { width: 6px; height: 6px; margin-right: 24px; background: #66D2BB; box-shadow: 12px 0 #66D2BB, 24px 0 #66D2BB; animation: loading-blink 0.8s steps(2) infinite; }
+    @keyframes loading-blink { 50% { opacity: 0.25; } }
+    .loading-bar { width: 60%; max-width: 220px; height: 8px; border: 2px solid #FAF0DB; padding: 1px; }
+    .loading-bar i { display: block; height: 100%; width: 0; background: #66D2BB; transition: width 0.2s; }
+    #loading[data-failed] .loading-bar, #loading[data-failed] .loading-mark { display: none; }
   </style>
-  <script type="module" crossorigin src="./assets/index-Bh3YahL0.js"></script>
+  <script type="module" crossorigin src="./assets/index-BfbTZAQd.js"></script>
 </head>
 <body>
   <div id="game-frame">
@@ -29,7 +35,8 @@
     <div class="pad" id="right" aria-label="오른쪽 분사 (D)"></div>
     <div id="loading" role="status" aria-live="polite">
       <strong>치루켓</strong>
-      <p>로딩 중…</p>
+      <p>로딩 중… 0%</p>
+      <div class="loading-bar" aria-hidden="true"><i></i></div>
       <span class="loading-mark" aria-hidden="true"></span>
     </div>
   </div>
@@ -56,6 +63,6 @@
       window.addEventListener('error', fail, true);
       window.addEventListener('unhandledrejection', fail);
     }
-  </script>
+  </script>
 </body>
 </html>
